@@ -1,13 +1,21 @@
 version: '3.1'
 
 services:
+  web:
+    build: 
+      context: .
+      args:
+        - NODE_ENV
+        - ORIGIN
+        - DATABASE_URL
+    restart: unless-stopped
+    ports:
+     - 3000:3000
 
   db:
-    image: postgres
-    restart: always
+    image: postgres:15.3-bullseye
+    restart: unless-stopped
     environment:
-      POSTGRES_PASSWORD: giorgiovola
+      POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
-    ports:
-      - 4050:5432
